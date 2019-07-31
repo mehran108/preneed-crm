@@ -76,11 +76,28 @@ namespace netcore.Models.Crm
         [Display(Name = "Zip Code")]
         [StringLength(30)]
         public string zipCode { get; set; }
-
         [Display(Name = "Birth Date")]
         public DateTime birthDate { get; set; }
         [Display(Name = "State")]
         [StringLength(30)]
         public string state { get; set; }
+        [Display(Name = "Funeral Home")]
+        [StringLength(30)]
+        public string FuneralHome { get; set; }
+        [Display(Name = "Director Name")]
+        [StringLength(30)]
+        public string DirectorName { get; set; }
+        [Display(Name = "Type of Service")]
+        [StringLength(30)]
+        public string TypeOfService { get; set; }
+        [Display(Name = "Veteran")]
+        [StringLength(30)]
+        public string Veteran { get; set; }
+        [Display(Name = "Person Name")]
+        [StringLength(30)]
+        public string PersonName { get; set; }
+        [Display(Name = "Address")]
+        [StringLength(30)]
+        public string Address { get; set; }
     }
 }

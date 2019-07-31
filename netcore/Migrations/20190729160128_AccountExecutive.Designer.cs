@@ -12,8 +12,8 @@ using System;
 namespace netcore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190722154633_Lead")]
-    partial class Lead
+    [Migration("20190729160128_AccountExecutive")]
+    partial class AccountExecutive
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -263,8 +263,7 @@ namespace netcore.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<DateTime>("birthDate")
-                        .HasMaxLength(30);
+                    b.Property<DateTime>("birthDate");
 
                     b.Property<string>("city")
                         .HasMaxLength(30);
@@ -361,8 +360,7 @@ namespace netcore.Migrations
                     b.Property<string>("accountExecutiveId")
                         .HasMaxLength(38);
 
-                    b.Property<DateTime>("birthDate")
-                        .HasMaxLength(30);
+                    b.Property<DateTime>("birthDate");
 
                     b.Property<string>("channelId")
                         .HasMaxLength(38);

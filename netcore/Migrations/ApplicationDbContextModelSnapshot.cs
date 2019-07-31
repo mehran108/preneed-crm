@@ -262,8 +262,7 @@ namespace netcore.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<DateTime>("birthDate")
-                        .HasMaxLength(30);
+                    b.Property<DateTime>("birthDate");
 
                     b.Property<string>("city")
                         .HasMaxLength(30);
@@ -355,13 +354,30 @@ namespace netcore.Migrations
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(38);
 
+                    b.Property<string>("Address")
+                        .HasMaxLength(30);
+
+                    b.Property<string>("DirectorName")
+                        .HasMaxLength(30);
+
+                    b.Property<string>("FuneralHome")
+                        .HasMaxLength(30);
+
                     b.Property<string>("HasChild");
+
+                    b.Property<string>("PersonName")
+                        .HasMaxLength(30);
+
+                    b.Property<string>("TypeOfService")
+                        .HasMaxLength(30);
+
+                    b.Property<string>("Veteran")
+                        .HasMaxLength(30);
 
                     b.Property<string>("accountExecutiveId")
                         .HasMaxLength(38);
 
-                    b.Property<DateTime>("birthDate")
-                        .HasMaxLength(30);
+                    b.Property<DateTime>("birthDate");
 
                     b.Property<string>("channelId")
                         .HasMaxLength(38);

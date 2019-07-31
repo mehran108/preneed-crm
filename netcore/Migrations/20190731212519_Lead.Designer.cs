@@ -12,8 +12,8 @@ using System;
 namespace netcore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190702060646_AccountExecutive")]
-    partial class AccountExecutive
+    [Migration("20190731212519_Lead")]
+    partial class Lead
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -263,8 +263,7 @@ namespace netcore.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<DateTime>("birthDate")
-                        .HasMaxLength(30);
+                    b.Property<DateTime>("birthDate");
 
                     b.Property<string>("city")
                         .HasMaxLength(30);
@@ -356,10 +355,30 @@ namespace netcore.Migrations
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(38);
 
+                    b.Property<string>("Address")
+                        .HasMaxLength(30);
+
+                    b.Property<string>("DirectorName")
+                        .HasMaxLength(30);
+
+                    b.Property<string>("FuneralHome")
+                        .HasMaxLength(30);
+
                     b.Property<string>("HasChild");
+
+                    b.Property<string>("PersonName")
+                        .HasMaxLength(30);
+
+                    b.Property<string>("TypeOfService")
+                        .HasMaxLength(30);
+
+                    b.Property<string>("Veteran")
+                        .HasMaxLength(30);
 
                     b.Property<string>("accountExecutiveId")
                         .HasMaxLength(38);
+
+                    b.Property<DateTime>("birthDate");
 
                     b.Property<string>("channelId")
                         .HasMaxLength(38);
@@ -385,9 +404,6 @@ namespace netcore.Migrations
                     b.Property<string>("leadName")
                         .IsRequired()
                         .HasMaxLength(50);
-
-                    b.Property<string>("province")
-                        .HasMaxLength(30);
 
                     b.Property<string>("state")
                         .HasMaxLength(30);
@@ -465,13 +481,21 @@ namespace netcore.Migrations
 
                     b.Property<decimal>("estimatedRevenue");
 
+                    b.Property<bool>("fundedFlag");
+
                     b.Property<string>("opportunityName")
                         .IsRequired()
                         .HasMaxLength(50);
 
+                    b.Property<string>("policyId")
+                        .HasMaxLength(38);
+
                     b.Property<int>("probability");
 
                     b.Property<string>("ratingId")
+                        .HasMaxLength(38);
+
+                    b.Property<string>("serviceId")
                         .HasMaxLength(38);
 
                     b.Property<string>("stageId")
@@ -483,7 +507,11 @@ namespace netcore.Migrations
 
                     b.HasIndex("customerId");
 
+                    b.HasIndex("policyId");
+
                     b.HasIndex("ratingId");
+
+                    b.HasIndex("serviceId");
 
                     b.HasIndex("stageId");
 
@@ -519,6 +547,40 @@ namespace netcore.Migrations
                     b.HasIndex("opportunityId");
 
                     b.ToTable("OpportunityLine");
+                });
+
+            modelBuilder.Entity("netcore.Models.Crm.OpportunityService", b =>
+                {
+                    b.Property<string>("serviceId")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(38);
+
+                    b.Property<DateTime>("createdAt");
+
+                    b.Property<string>("serviceName")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.HasKey("serviceId");
+
+                    b.ToTable("OpportunityService");
+                });
+
+            modelBuilder.Entity("netcore.Models.Crm.Policy", b =>
+                {
+                    b.Property<string>("policyId")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(38);
+
+                    b.Property<DateTime>("createdAt");
+
+                    b.Property<string>("policyName")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.HasKey("policyId");
+
+                    b.ToTable("Policy");
                 });
 
             modelBuilder.Entity("netcore.Models.Crm.Rating", b =>
@@ -1604,9 +1666,17 @@ namespace netcore.Migrations
                         .WithMany()
                         .HasForeignKey("customerId");
 
+                    b.HasOne("netcore.Models.Crm.Policy", "policy")
+                        .WithMany()
+                        .HasForeignKey("policyId");
+
                     b.HasOne("netcore.Models.Crm.Rating", "rating")
                         .WithMany()
                         .HasForeignKey("ratingId");
+
+                    b.HasOne("netcore.Models.Crm.OpportunityService", "service")
+                        .WithMany()
+                        .HasForeignKey("serviceId");
 
                     b.HasOne("netcore.Models.Crm.Stage", "stage")
                         .WithMany()
