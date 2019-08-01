@@ -8,7 +8,19 @@
     ViewData["IndexInfo"] = "Lead is your raw prospect that need to be qualified by followup with certain activities";
 }
 
-
+<form method="post" enctype="multipart/form-data" asp-controller="Lead" asp-action="UploadFiles">
+    <div class="form-group">
+        <div class="col-md-10">
+            <p>Upload one or more files using this form:</p>
+            <input type="file" class="btn btn-primary margin-bottom" name="files" multiple>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" class="btn btn-primary margin-bottom" value="Upload">
+        </div>
+    </div>
+</form>
 <table class="table table-hover table-striped">
     <thead>
         <tr>
@@ -91,9 +103,9 @@
                 @Html.DisplayFor(modelItem => item.accountExecutive.accountExecutiveId)
             </td>
             <td>
-                <span class="label" style="background-color:@item.channel.colorHex">
+                @*<span class="label" style="background-color:@item.channel.colorHex">
                     @Html.DisplayFor(modelItem => item.channel.channelName)
-                </span>
+                </span>*@
                 
             </td>
 

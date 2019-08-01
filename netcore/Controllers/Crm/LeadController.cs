@@ -11,6 +11,10 @@ using System.ComponentModel.DataAnnotations;
 using netcore.Data;
 using netcore.Models.Crm;
 using netcore.Models.Invent;
+using System.IO;
+using OfficeOpenXml;
+using System.Text;
+using Microsoft.AspNetCore.Http;
 
 namespace netcore.Controllers.Crm
 {
@@ -31,6 +35,66 @@ namespace netcore.Controllers.Crm
         {
             var applicationDbContext = _context.Lead.Include(l => l.accountExecutive).Include(l => l.channel);
             return View(await applicationDbContext.ToListAsync());
+        }
+        public async Task<IActionResult> UploadFiles(List<IFormFile> files)
+        {
+            long size = files.Sum(f => f.Length);
+
+            // full path to file in temp location
+            // var filePath = Path.GetTempFileName();
+            foreach (var formFile in files)
+            {
+                if (formFile.Length > 0)
+                {
+
+
+                    var fileName = Path.GetFileName(formFile.FileName);
+                    var filePath = Path.GetFullPath(formFile.FileName);
+                    FileInfo file = new FileInfo(filePath);
+                    List<Lead> groups = new List<Lead>();
+                    //using (var stream = new FileStream(filePath, FileMode.Create))
+                    //{
+                    //    await formFile.CopyToAsync(stream);
+                    //}
+                    //var stream = new FileStream(filePath, FileMode.Open);
+                    using (ExcelPackage package = new ExcelPackage(file))
+                    {
+
+                        StringBuilder sb = new StringBuilder();
+                        ExcelWorksheet worksheet = package.Workbook.Worksheets[1];
+                        int rowCount = worksheet.Dimension.Rows;
+                        int ColCount = worksheet.Dimension.Columns;
+                        for (int i = 2; i <= 20; i++)
+                        {
+                            Lead obj = new Lead();
+                            obj.PersonName = Convert.ToString(worksheet.Cells[i, 1].Value).Trim();
+                            obj.birthDate = Convert.ToDateTime(worksheet.Cells[i, 2].Value);
+                            // obj.age = Convert.ToInt32(worksheet.Cells[i, 3].Value);
+                            obj.FuneralHome = Convert.ToString(worksheet.Cells[i, 3].Value).Trim();
+                            obj.DirectorName = Convert.ToString(worksheet.Cells[i, 4].Value).Trim();
+                            obj.TypeOfService = Convert.ToString(worksheet.Cells[i, 5].Value).Trim();
+                            obj.Veteran = Convert.ToString(worksheet.Cells[i, 6].Value).Trim();
+                            obj.Address = Convert.ToString(worksheet.Cells[i, 7].Value).Trim();
+                            obj.leadName = Convert.ToString(worksheet.Cells[i, 8].Value).Trim();
+                            obj.description = Convert.ToString(worksheet.Cells[i, 9].Value).Trim();
+                            obj.street1 = Convert.ToString(worksheet.Cells[i, 10].Value).Trim();
+                            obj.street2 = Convert.ToString(worksheet.Cells[i, 11].Value).Trim();
+                            obj.city = Convert.ToString(worksheet.Cells[i, 12].Value).Trim();
+                            obj.country = Convert.ToString(worksheet.Cells[i, 13].Value).Trim();
+                            groups.Add(obj);
+                        }
+                        _context.AddRange(groups);
+                        await _context.SaveChangesAsync();
+                       
+                    }
+                }
+            }
+                      return RedirectToAction("Index");
+
+            // process uploaded files
+            // Don't rely on or trust the FileName property without validation.
+
+            // return Ok(new { count = files.Count, size, filePath });
         }
 
         // GET: Lead/Details/5
