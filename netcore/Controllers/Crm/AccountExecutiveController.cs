@@ -86,6 +86,7 @@ namespace netcore.Controllers.Crm
             }
 
             var accountExecutive = await _context.AccountExecutive.SingleOrDefaultAsync(m => m.accountExecutiveId == id);
+            accountExecutive.birthDate = DateTime.Now;
             if (accountExecutive == null)
             {
                 return NotFound();

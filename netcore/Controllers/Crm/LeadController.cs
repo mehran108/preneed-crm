@@ -157,6 +157,7 @@ namespace netcore.Controllers.Crm
             }
 
             var lead = await _context.Lead.SingleOrDefaultAsync(m => m.leadId == id);
+            lead.birthDate = DateTime.Now;
             if (lead == null)
             {
                 return NotFound();
