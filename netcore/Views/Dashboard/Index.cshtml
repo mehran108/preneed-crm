@@ -43,6 +43,7 @@
     List<Opportunity> opportunities = new List<Opportunity>();
     opportunities = _context.Opportunity.ToList();
     decimal les = opportunities.Where(x => x.probability < 50).Sum(x => x.estimatedRevenue);
+
     decimal mor = opportunities.Where(x => x.probability >= 50).Sum(x => x.estimatedRevenue);
     decimal tot = les + mor;
 
